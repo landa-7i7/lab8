@@ -29,30 +29,30 @@ int maxSameLettersCount(const string& word) {
 }
 
 vector<WordCount> Bogo(const vector<WordCount>& a, const vector<WordCount>& b){
-    vector<WordCount> Bogoa;
+    vector<WordCount> BogoRandom;
     int index1 = 0, index2 = 0;
 
     while (index1 < a.size() && index2 < b.size()){
         if(a[index1].maxCount > b[index2].maxCount){
-            Bogoa.push_back(a[index1]);
+            BogoRandom.push_back(a[index1]);
             ++index1;
         } else {
-            Bogoa.push_back(b[index2]);
+            BogoRandom.push_back(b[index2]);
             ++index2;
         }
     }
 
     while (index1 < a.size()) {
-        Bogoa.push_back(a[index1]);
+        BogoRandom.push_back(a[index1]);
         ++index1;
     }
 
     while (index2 < b.size()) {
-        Bogoa.push_back(b[index2]);
+        BogoRandom.push_back(b[index2]);
         ++index2;
     }
 
-    return Bogoa;
+    return BogoRandom;
 }
 
 
@@ -96,6 +96,57 @@ string duplicate_vowels(const string &word) {
         }
     }
     return result;
+}
+
+
+// lab 8.3 bogosort
+
+struct CharCount {
+    char character;
+    int count;
+
+    // Comparator for sorting based on count
+    bool operator>(const CharCount& other) const {
+        return count > other.count; // Sorting in descending order
+    }
+};
+
+vector<CharCount> Bogo_bychar(const vector<CharCount>& a, const vector<CharCount>& b){
+    vector<CharCount> BogoRandom;
+    int index1 = 0, index2 = 0;
+
+    while (index1 < a.size() && index2 < b.size()){
+        if(a[index1].count > b[index2].count){
+            BogoRandom.push_back(a[index1]);
+            ++index1;
+        } else {
+            BogoRandom.push_back(b[index2]);
+            ++index2;
+        }
+    }
+
+    while (index1 < a.size()) {
+        BogoRandom.push_back(a[index1]);
+        ++index1;
+    }
+
+    while (index2 < b.size()) {
+        BogoRandom.push_back(b[index2]);
+        ++index2;
+    }
+
+    return BogoRandom;
+}
+
+
+vector<CharCount> BogoSort_bychar(const vector<CharCount>& a){
+    if (a.size() <= 1) return a;
+    int mid = a.size() / 2;
+
+    vector<CharCount> l = BogoSort_bychar(vector<CharCount>(a.begin(), a.begin() + mid));
+    vector<CharCount> r = BogoSort_bychar(vector<CharCount>(a.begin() + mid, a.end()));
+
+    return Bogo_bychar(l,r);
 }
 
 
@@ -158,15 +209,34 @@ int main(){
     // outputFile.close();
 
     // lab 8.3
-    vector<string> words;
+
+    vector<string> Text;
     unordered_map<char, int> letterCount;
-    string w;
-    while(FileA >> w) {
-        for(char ch: w) letterCount[ch]++;
+    string tmpText;
+    while(FileA >> tmpText) Text.push_back(tmpText);
+    for(string w : Text) for(char ch: w) letterCount[ch]++;
+
+    vector<CharCount> letterCountSorted;
+    for (const auto& a77 : letterCount) if(isalpha(a77.first)) letterCountSorted.push_back({a77.first, a77.second});
+
+    letterCountSorted = BogoSort_bychar(letterCountSorted);
+
+    for (const auto& item : letterCountSorted) {
+        cout << item.character << ":" << item.count << ' ';
     }
-    for(auto a : letterCount) cout << a.first << ' ';
 
+    vector<string> Result;
+    for(string word : Text){
+        int count = 0;
+        string letters = "(";
+        for(char ch : word) if(letterCount[ch] >= letterCountSorted[3].count) { ++count; letters += ch; }
+        if (count >= 4) { transform(word.begin(), word.end(), word.begin(), ::toupper); Result.push_back(word); Result.push_back(letters+")"); }
+        else Result.push_back(word);
+    }
 
+    for (const auto& item : Result) {
+        cout << item << ' ';
+    }
 
 
     return 0;
