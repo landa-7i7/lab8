@@ -1,8 +1,0 @@
-[
-{
-  "directory": "C:/Users/777/Desktop/lab8/build",
-  "command": "C:\\msys64\\mingw64\\bin\\clang++.exe   -g -std=c++17 -o CMakeFiles\\example.dir\\main.cpp.obj -c C:\\Users\\777\\Desktop\\lab8\\main.cpp",
-  "file": "C:/Users/777/Desktop/lab8/main.cpp",
-  "output": "CMakeFiles/example.dir/main.cpp.obj"
-}
-]
