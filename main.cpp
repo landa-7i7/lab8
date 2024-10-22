@@ -167,7 +167,7 @@ int main(){
 
     // auto result = BogoSort(words);
 
-    // ofstream outputFile("resultFile.txt");
+    // ofstream outputFile("output.txt");
 
     // for ( auto word : result ) {
     //     outputFile << word.word << ':' << word.maxCount << endl;
@@ -200,43 +200,46 @@ int main(){
     //     sort(words.rbegin(), words.rend());
     // }
 
-    // ofstream outputFile("resultFile.txt");
+    // ofstream outputFile("output.txt");
 
     // for ( auto word : words ) {
-    //     outputFile << word << ':' << word << endl;
+    //     outputFile << word << endl;
     //     cout << word << ' ';
     // }
     // outputFile.close();
 
     // lab 8.3
 
-    vector<string> Text;
-    unordered_map<char, int> letterCount;
-    string tmpText;
-    while(FileA >> tmpText) Text.push_back(tmpText);
-    for(string w : Text) for(char ch: w) letterCount[ch]++;
+    // vector<string> Text;
+    // unordered_map<char, int> letterCount;
+    // string tmpText;
+    // while(FileA >> tmpText) Text.push_back(tmpText);
+    // for(string w : Text) for(char ch: w) letterCount[ch]++;
 
-    vector<CharCount> letterCountSorted;
-    for (const auto& a77 : letterCount) if(isalpha(a77.first)) letterCountSorted.push_back({a77.first, a77.second});
+    // vector<CharCount> letterCountSorted;
+    // for (const auto& a77 : letterCount) if(isalpha(a77.first)) letterCountSorted.push_back({a77.first, a77.second});
 
-    letterCountSorted = BogoSort_bychar(letterCountSorted);
+    // letterCountSorted = BogoSort_bychar(letterCountSorted);
 
-    for (const auto& item : letterCountSorted) {
-        cout << item.character << ":" << item.count << ' ';
-    }
+    // for (const auto& item : letterCountSorted) {
+    //     cout << item.character << ":" << item.count << ' ';
+    // }
 
-    vector<string> Result;
-    for(string word : Text){
-        int count = 0;
-        string letters = "(";
-        for(char ch : word) if(letterCount[ch] >= letterCountSorted[3].count) { ++count; letters += ch; }
-        if (count >= 4) { transform(word.begin(), word.end(), word.begin(), ::toupper); Result.push_back(word); Result.push_back(letters+")"); }
-        else Result.push_back(word);
-    }
+    // ofstream outputFile("output.txt");
 
-    for (const auto& item : Result) {
-        cout << item << ' ';
-    }
+    // vector<string> Result;
+    // for(string word : Text){
+    //     int count = 0;
+    //     string letters = "(";
+    //     for(char ch : word) if(letterCount[ch] >= letterCountSorted[4].count) { ++count; letters += ch; }
+    //     if (count >= 4) { transform(word.begin(), word.end(), word.begin(), ::toupper); Result.push_back(word); Result.push_back(letters+")"); }
+    //     else Result.push_back(word);
+    // }
+
+    // for (const auto& item : Result) {
+    //     outputFile << item << ' ';
+    //     cout << item << ' ';
+    // }
 
 
     return 0;
